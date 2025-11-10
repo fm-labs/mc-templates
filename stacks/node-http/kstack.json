@@ -1,0 +1,45 @@
+{
+  "name": "node-http",
+  "description": "Example of a simple Node.js HTTP server",
+
+  "stacks": {
+    "default": {
+      "type": "compose",
+      "composeFile": "docker-compose.yml",
+      "environment": {
+        "NODE_ENV": "production"
+      }
+    },
+    "dev": {
+      "type": "compose",
+      "composeFile": "docker-compose-dev.yml",
+      "environment": {
+        "NODE_ENV": "development"
+      },
+      "tasks": {
+        "dev-command": {
+          "description": "Dev command (only available in dev stack)",
+          "run": "dev-command"
+        }
+      }
+    }
+  },
+  "commands": {
+    "help": {
+      "description": "Show help",
+      "run": "print-help"
+    },
+    "version": {
+      "description": "Show version",
+      "run": "print-version"
+    },
+    "db-migration-check": {
+      "description": "Check for pending database migrations",
+      "run": "migrate-db --check"
+    },
+    "db-migration": {
+      "description": "Run pending database migrations",
+      "run": "migrate-db"
+    }
+  }
+}
