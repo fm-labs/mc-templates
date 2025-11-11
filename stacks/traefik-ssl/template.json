@@ -14,23 +14,29 @@
         "patternErrorMessage": "Please enter a valid email address."
       },
       "TRAEFIK_DASHBOARD_ENABLED": {
-        "type": "boolean",
+        "type": "string",
         "title": "Dashboard Basic Auth Enabled",
-        "default": false
+        "default": "false",
+        "enum": [
+          "true",
+          "false"
+        ]
       },
       "TRAEFIK_DASHBOARD_INSECURE": {
-        "type": "boolean",
+        "type": "string",
         "title": "Dashboard Insecure Mode",
         "description": "Enable insecure mode for the Traefik dashboard (not recommended for production).",
-        "default": false
+        "default": "false",
+        "enum": [
+          "true",
+          "false"
+        ]
       },
       "TRAEFIK_DASHBOARD_PORT": {
-        "type": "integer",
+        "type": "string",
         "title": "Dashboard Port",
         "description": "Port number for accessing the Traefik dashboard.",
-        "default": 8080,
-        "minimum": 1,
-        "maximum": 65535
+        "default": "8080"
       },
       "TRAEFIK_DASHBOARD_ADMIN_USER": {
         "type": "string",
@@ -51,13 +57,13 @@
         "maxLength": 64
       },
       "TRAEFIK_DASHBOARD": {
-        "type": "boolean",
+        "type": "string",
         "title": "Enable Dashboard",
         "description": "Enable or disable the Traefik dashboard.",
-        "default": true,
+        "default": "true",
         "enum": [
-          true,
-          false
+          "true",
+          "false"
         ]
       },
       "TRAEFIK_DASHBOARD_DOMAIN": {
