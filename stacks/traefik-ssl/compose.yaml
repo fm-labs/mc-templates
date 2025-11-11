@@ -79,7 +79,7 @@ services:
       - --api
       - --api.dashboard=${TRAEFIK_DASHBOARD_ENABLED:-false}
       - --api.insecure=${TRAEFIK_DASHBOARD_INSECURE:-false}
-      - --entrypoints.dashboard.address=${TRAEFIK_DASHBOARD_PORT:-:8080}
+      - --entrypoints.dashboard.address=:${TRAEFIK_DASHBOARD_PORT:-8080}
 
       # Read labels from Docker services
       # Only explicitly exposed services
