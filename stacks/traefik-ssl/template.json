@@ -13,6 +13,25 @@
         "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
         "patternErrorMessage": "Please enter a valid email address."
       },
+      "TRAEFIK_DASHBOARD_ENABLED": {
+        "type": "boolean",
+        "title": "Dashboard Basic Auth Enabled",
+        "default": false
+      },
+      "TRAEFIK_DASHBOARD_INSECURE": {
+        "type": "boolean",
+        "title": "Dashboard Insecure Mode",
+        "description": "Enable insecure mode for the Traefik dashboard (not recommended for production).",
+        "default": false
+      },
+      "TRAEFIK_DASHBOARD_PORT": {
+        "type": "integer",
+        "title": "Dashboard Port",
+        "description": "Port number for accessing the Traefik dashboard.",
+        "default": 8080,
+        "minimum": 1,
+        "maximum": 65535
+      },
       "TRAEFIK_DASHBOARD_ADMIN_USER": {
         "type": "string",
         "title": "Admin Basic Auth User",

@@ -1,6 +1,5 @@
 services:
 
-
   traefik:
     image: traefik:v3.5.4
     # Enables the web UI and tells Traefik to listen to docker
@@ -20,6 +19,12 @@ services:
       # Use the traefik-ssl network (declared below)
       - traefik.docker.network=traefik-ssl
 
+      # admin-auth middleware with HTTP Basic auth
+      # Using the environment variables TRAEFIK_DASHBOARD_ADMIN_USER and TRAEFIK_DASHBOARD_ADMIN_PASSWORD
+      - traefik.http.middlewares.admin-auth.basicauth.users=${TRAEFIK_DASHBOARD_ADMIN_USER?Variable not set}:${TRAEFIK_DASHBOARD_ADMIN_PASSWORD?Variable not set}
+      # Enable HTTP Basic auth, using the middleware created above
+      - traefik.http.routers.traefik-dashboard-https.middlewares=admin-auth
+
       # middleware: security-headers
       - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000"
       - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
@@ -27,14 +32,14 @@ services:
       - "traefik.http.middlewares.security-headers.headers.frameDeny=true"
       - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
       - "traefik.http.middlewares.security-headers.headers.referrerPolicy=no-referrer"
-      # Default Permissions-Policy
-      - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.Permissions-Policy=geolocation=(), microphone=()"
-      # CSP header
-      - "traefik.http.middlewares.security-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; media-src 'self' data:; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; font-src 'self';"
       # Strip headers (Server and X-Powered-By)
       - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.Server="
       - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.X-Powered-By="
-
+      # Default Permissions-Policy
+      - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.Permissions-Policy=geolocation=(), microphone=()"
+      # Default CSP header
+      #- "traefik.http.middlewares.security-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; media-src 'self' data:; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; font-src 'self';"
+      #- "traefik.http.middlewares.security-headers.headers.contentSecurityPolicy=default-src 'self';"
 
       # Route: HTTPS dashboard at https://${DASH_SUBDOMAIN}.${ROOT_DOMAIN}
       #- traefik.http.routers.traefik.rule=Host(`${DASH_SUBDOMAIN}.${ROOT_DOMAIN}`)
@@ -42,7 +47,6 @@ services:
       #- traefik.http.routers.traefik.tls=true
       #- traefik.http.routers.traefik.tls.certresolver=le
       #- traefik.http.routers.traefik.service=api@internal
-
       # Security headers for the dashboard
       #- traefik.http.middlewares.secure-headers.headers.stsSeconds=63072000
       #- traefik.http.middlewares.secure-headers.headers.stsIncludeSubdomains=true
@@ -50,8 +54,6 @@ services:
       #- traefik.http.middlewares.secure-headers.headers.frameDeny=true
       #- traefik.http.middlewares.secure-headers.headers.contentTypeNosniff=true
       #- traefik.http.routers.traefik.middlewares=secure-headers@docker
-
-
       # Define the port inside of the Docker service to use
       #      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
       #      # Make Traefik use this domain (from an environment variable) in HTTP
@@ -65,26 +67,19 @@ services:
       #      - traefik.http.routers.traefik-dashboard-https.tls.certresolver=le
       #      # Use the special Traefik service api@internal with the web UI/Dashboard
       #      - traefik.http.routers.traefik-dashboard-https.service=api@internal
-
       #      # https-redirect middleware to redirect HTTP to HTTPS
       #      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
       #      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
-
       #      # traefik-http set up only to use the middleware to redirect to https
       #      - traefik.http.routers.traefik-dashboard-http.middlewares=https-redirect
-      #      # admin-auth middleware with HTTP Basic auth
-      #      # Using the environment variables USERNAME and HASHED_PASSWORD
-      #      - traefik.http.middlewares.admin-auth.basicauth.users=${USERNAME?Variable not set}:${HASHED_PASSWORD?Variable not set}
-      #      # Enable HTTP Basic auth, using the middleware created above
-      #      - traefik.http.routers.traefik-dashboard-https.middlewares=admin-auth
 
 
     command:
       # Enable the Dashboard and API
       - --api
-      - --api.dashboard=true
-      - --api.insecure=true
-      #- --entrypoints.dashboard.address=:8080
+      - --api.dashboard=${TRAEFIK_DASHBOARD_ENABLED:-false}
+      - --api.insecure=${TRAEFIK_DASHBOARD_INSECURE:-false}
+      - --entrypoints.dashboard.address=${TRAEFIK_DASHBOARD_PORT:-:8080}
 
       # Read labels from Docker services
       # Only explicitly exposed services
@@ -103,7 +98,7 @@ services:
       - --entrypoints.websecure.http.middlewares=security-headers@docker
 
       # --- Let's Encrypt (HTTP-01 challenge on :80) ---
-      - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.le.acme.email=${TRAEFIK_LETSENCRYPT_EMAIL:-acme@example.org}
       - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
 
@@ -113,32 +108,12 @@ services:
       - --accesslog.format=common
       # Enable the Traefik log, for configurations and errors
       - --log
-      - --log.level=DEBUG
+      - --log.level=${TRAEFIK_LOG_LEVEL:-INFO}
       - --log.format=common
       - --log.nocolor=true
 
     networks:
       - traefik-ssl
-
-
-  #  whoami:
-  #    image: traefik/whoami:latest
-  #    restart: unless-stopped
-  #    networks:
-  #      - traefik-ssl
-  #    labels:
-  #      - traefik.enable=true
-  #      - traefik.docker.network=traefik-ssl
-  #      #- traefik.constraint-label=traefik-ssl
-  #
-  #      # Route: https://${APP1_DOMAIN}
-  #      #- traefik.http.routers.whoami.rule=Host(`${WHOAMI_DOMAIN}`)
-  #      #- traefik.http.routers.whoami.entrypoints=websecure
-  #      #- traefik.http.routers.whoami.tls=true
-  #      #- traefik.http.routers.whoami.tls.certresolver=le
-  #
-  #      # whoami listens on 80 inside the container
-  #      - traefik.http.services.whoami.loadbalancer.server.port=80
 
 
   socket-proxy:
