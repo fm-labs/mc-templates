@@ -47,6 +47,8 @@ services:
       #- traefik.http.routers.traefik.tls=true
       #- traefik.http.routers.traefik.tls.certresolver=le
       #- traefik.http.routers.traefik.service=api@internal
+
+
       # Security headers for the dashboard
       #- traefik.http.middlewares.secure-headers.headers.stsSeconds=63072000
       #- traefik.http.middlewares.secure-headers.headers.stsIncludeSubdomains=true
