@@ -7,7 +7,6 @@
     "properties": {
       "TRAEFIK_LETSENCRYPT_EMAIL": {
         "type": "string",
-        "title": "Lets Encrypt Email",
         "description": "Email address for Let's Encrypt notifications.",
         "default": "",
         "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
@@ -15,7 +14,6 @@
       },
       "TRAEFIK_DASHBOARD_ENABLED": {
         "type": "string",
-        "title": "Dashboard Basic Auth Enabled",
         "default": "false",
         "enum": [
           "true",
@@ -24,7 +22,6 @@
       },
       "TRAEFIK_DASHBOARD_INSECURE": {
         "type": "string",
-        "title": "Dashboard Insecure Mode",
         "description": "Enable insecure mode for the Traefik dashboard (not recommended for production).",
         "default": "false",
         "enum": [
@@ -34,13 +31,11 @@
       },
       "TRAEFIK_DASHBOARD_PORT": {
         "type": "string",
-        "title": "Dashboard Port",
         "description": "Port number for accessing the Traefik dashboard.",
         "default": "8080"
       },
       "TRAEFIK_DASHBOARD_ADMIN_USER": {
         "type": "string",
-        "title": "Admin Basic Auth User",
         "description": "Username for basic authentication.",
         "default": "admin",
         "minLength": 3,
@@ -50,31 +45,18 @@
       },
       "TRAEFIK_DASHBOARD_ADMIN_PASSWORD": {
         "type": "string",
-        "title": "Admin Basic Auth Password",
         "description": "Password for basic authentication.",
         "default": "",
         "minLength": 8,
         "maxLength": 64
       },
-      "TRAEFIK_DASHBOARD": {
-        "type": "string",
-        "title": "Enable Dashboard",
-        "description": "Enable or disable the Traefik dashboard.",
-        "default": "true",
-        "enum": [
-          "true",
-          "false"
-        ]
-      },
       "TRAEFIK_DASHBOARD_DOMAIN": {
         "type": "string",
-        "title": "Dashboard Domain",
         "description": "The domain name for the Traefik dashboard.",
         "default": ""
       },
       "TRAEFIK_LOG_LEVEL": {
         "type": "string",
-        "title": "Log Level",
         "description": "Set the log level for Traefik.",
         "default": "INFO",
         "enum": [
