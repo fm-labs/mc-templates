@@ -1,36 +1,21 @@
 {
   "version": "1.0.0",
 
-  "routing": [
-    {
-      "id": "frontend",
-      "service": "nginx",
-      "containerPort": 80,
-      "strategy": "domain",
-      "accessPolicy": "public"
-    },
-    {
-      "id": "backend",
-      "service": "nginx",
-      "containerPort": 81,
-      "strategy": "domain",
-      "accessPolicy": "protected"
-    }
-  ],
+  "routing": [],
 
   "environment": {
     "properties": {
       "TRAEFIK_LETSENCRYPT_EMAIL": {
         "type": "string",
-        "title": "Email",
+        "title": "Lets Encrypt Email",
         "description": "Email address for Let's Encrypt notifications.",
         "default": "",
         "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
         "patternErrorMessage": "Please enter a valid email address."
       },
-      "TRAEFIK_BASIC_AUTH_USER": {
+      "TRAEFIK_DASHBOARD_ADMIN_USER": {
         "type": "string",
-        "title": "Basic Auth User",
+        "title": "Admin Basic Auth User",
         "description": "Username for basic authentication.",
         "default": "admin",
         "minLength": 3,
@@ -38,9 +23,9 @@
         "pattern": "^[a-zA-Z0-9._-]+$",
         "patternErrorMessage": "Username can only contain letters, numbers, dots, underscores, and hyphens."
       },
-      "TRAEFIK_BASIC_AUTH_PASSWORD": {
+      "TRAEFIK_DASHBOARD_ADMIN_PASSWORD": {
         "type": "string",
-        "title": "Basic Auth Password",
+        "title": "Admin Basic Auth Password",
         "description": "Password for basic authentication.",
         "default": "",
         "minLength": 8,
@@ -54,12 +39,7 @@
         "enum": [
           true,
           false
-        ],
-        "enumNames": [
-          "Enabled",
-          "Disabled"
-        ],
-        "widget": "toggle"
+        ]
       },
       "TRAEFIK_DASHBOARD_DOMAIN": {
         "type": "string",
@@ -78,19 +58,9 @@
           "WARN",
           "ERROR"
         ],
-        "enumNames": [
-          "Debug",
-          "Info",
-          "Warn",
-          "Error"
-        ],
         "widget": "select"
       }
     },
-    "required": [
-      "LETSENCRYPT_EMAIL",
-      "TRAEFIK_BASIC_AUTH_USER",
-      "TRAEFIK_BASIC_AUTH_PASSWORD"
-    ]
+    "required": []
   }
 }

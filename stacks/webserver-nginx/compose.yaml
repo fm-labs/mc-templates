@@ -1,6 +1,7 @@
 
 services:
-
-  app:
+  nginx:
     image: nginx:latest
     restart: always
+    expose:
+      - "80"

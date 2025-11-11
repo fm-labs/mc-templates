@@ -2,10 +2,9 @@
   "version": "1.0.0",
   "routing": [
     {
-      "id": "http",
+      "id": "wordpress-public",
       "service": "wordpress",
       "containerPort": 80,
-      "strategy": "domain",
       "accessPolicy": "public"
     }
   ],
