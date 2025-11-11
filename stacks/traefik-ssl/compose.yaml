@@ -161,4 +161,3 @@ networks:
 
 volumes:
   traefik_letsencrypt:
-    name: traefik_letsencrypt
