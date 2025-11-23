@@ -5,6 +5,11 @@
 
   "environment": {
     "properties": {
+      "TRAEFIK_VERSION": {
+        "type": "string",
+        "description": "Specify the version of Traefik to use.",
+        "default": "v3.5.4"
+      },
       "TRAEFIK_LETSENCRYPT_EMAIL": {
         "type": "string",
         "description": "Email address for Let's Encrypt notifications.",
@@ -37,7 +42,7 @@
       "TRAEFIK_DASHBOARD_ADMIN_USER": {
         "type": "string",
         "description": "Username for basic authentication.",
-        "default": "admin",
+        "default": "",
         "minLength": 3,
         "maxLength": 20,
         "pattern": "^[a-zA-Z0-9._-]+$",
