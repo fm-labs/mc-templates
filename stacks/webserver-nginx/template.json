@@ -1,0 +1,9 @@
+{
+  "type": "compose",
+  "version": "1.0.0",
+  "title": "Nginx Web Server",
+  "description": "Nginx web server inventory item",
+  "stackfile": "compose.yaml",
+  "environment": {},
+  "secrets": {}
+}

@@ -1,0 +1,11 @@
+{
+  "type": "compose",
+  "name": "app-nodejs",
+  "description": "Build and run NodeJS application from sources",
+  "stackfile": "compose.yaml",
+  "build": {
+    "mode": "auto"
+  },
+  "environment": {},
+  "secrets": {}
+}

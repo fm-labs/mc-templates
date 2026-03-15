@@ -50,7 +50,7 @@ services:
       #   define('WP_SITEURL','http://localhost:8080');
     volumes:
       - wp_data:/var/www/html
-      - ./dbcheck.php:/dbcheck.php:ro
+      #- ./dbcheck.php:/dbcheck.php:ro
     networks:
       - wordpress-net
 

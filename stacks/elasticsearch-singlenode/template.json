@@ -1,0 +1,56 @@
+{
+  "environment": {
+    "properties": {
+      "ELASTIC_PASSWORD": {
+        "type": "string",
+        "minLength": 6
+      },
+      "KIBANA_PASSWORD": {
+        "type": "string",
+        "minLength": 6
+      },
+      "STACK_VERSION": {
+        "type": "string",
+        "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      },
+      "CLUSTER_NAME": {
+        "type": "string"
+      },
+      "LICENSE": {
+        "type": "string",
+        "enum": [
+          "basic",
+          "trial"
+        ]
+      },
+      "ES_PORT": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65535
+      },
+      "KIBANA_PORT": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65535
+      },
+      "MEM_LIMIT": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "COMPOSE_PROJECT_NAME": {
+        "type": "string",
+        "default": ""
+      }
+    },
+    "required": [
+      "ELASTIC_PASSWORD",
+      "KIBANA_PASSWORD",
+      "STACK_VERSION",
+      "CLUSTER_NAME",
+      "LICENSE",
+      "ES_PORT",
+      "KIBANA_PORT",
+      "MEM_LIMIT"
+    ]
+  }
+}

@@ -2,11 +2,11 @@
   "name": "node-hello-app",
   "version": "1.0.0",
   "description": "A simple Node.js app that serves a hello message",
-  "main": "server.js",
+  "main": "dist/server.js",
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "start": "node server.js"
+    "start": "node dist/server.js"
   },
   "author": "",
   "license": "ISC"
