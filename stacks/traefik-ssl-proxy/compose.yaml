@@ -1,4 +1,4 @@
- services:
+services:
 
   traefik:
     image: traefik:${TRAEFIK_VERSION:-v3.6.2}
@@ -100,7 +100,7 @@
       - --entrypoints.websecure.http.middlewares=security-headers@docker
 
       # --- Let's Encrypt (HTTP-01 challenge on :80) ---
-      - --certificatesresolvers.le.acme.email=${TRAEFIK_LETSENCRYPT_EMAIL:-}
+      - --certificatesresolvers.le.acme.email=${TRAEFIK_LETSENCRYPT_EMAIL:-acme@example.org}
       - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
 
@@ -132,9 +132,11 @@
     networks:
       - traefik-ssl
 
+
 networks:
   traefik-ssl:
     external: true
+
 
 volumes:
   traefik_letsencrypt:
