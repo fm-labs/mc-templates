@@ -6,24 +6,18 @@
   "environment": {
     "properties": {
       "TRAEFIK_VERSION": {
-        "type": "string",
         "description": "Specify the version of Traefik to use.",
-        "default": "v3.6.2",
-        "enum": [
-          "v3.6.2",
-          "v3.6.1",
-          "v3.5.4"
-        ]
+        "default": "v3.6.10",
+        "pattern": "^v?\\d+\\.\\d+\\.\\d+$",
+        "patternErrorMessage": "Version must be in the format 'vX.Y.Z'"
       },
       "TRAEFIK_LETSENCRYPT_EMAIL": {
-        "type": "string",
         "description": "Email address for Let's Encrypt notifications.",
         "default": "",
         "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
         "patternErrorMessage": "Please enter a valid email address."
       },
       "TRAEFIK_DASHBOARD_ENABLED": {
-        "type": "string",
         "default": "false",
         "enum": [
           "true",
@@ -31,7 +25,6 @@
         ]
       },
       "TRAEFIK_DASHBOARD_INSECURE": {
-        "type": "string",
         "description": "Enable insecure mode for the Traefik dashboard (not recommended for production).",
         "default": "false",
         "enum": [
@@ -40,12 +33,10 @@
         ]
       },
       "TRAEFIK_DASHBOARD_PORT": {
-        "type": "string",
         "description": "Port number for accessing the Traefik dashboard.",
         "default": "8080"
       },
       "TRAEFIK_DASHBOARD_ADMIN_USER": {
-        "type": "string",
         "description": "Username for basic authentication.",
         "default": "",
         "minLength": 3,
@@ -54,19 +45,16 @@
         "patternErrorMessage": "Username can only contain letters, numbers, dots, underscores, and hyphens."
       },
       "TRAEFIK_DASHBOARD_ADMIN_PASSWORD": {
-        "type": "string",
         "description": "Password for basic authentication.",
         "default": "",
         "minLength": 8,
         "maxLength": 64
       },
       "TRAEFIK_DASHBOARD_DOMAIN": {
-        "type": "string",
         "description": "The domain name for the Traefik dashboard.",
         "default": ""
       },
       "TRAEFIK_LOG_LEVEL": {
-        "type": "string",
         "description": "Set the log level for Traefik.",
         "default": "INFO",
         "enum": [
@@ -74,10 +62,18 @@
           "INFO",
           "WARN",
           "ERROR"
-        ],
-        "widget": "select"
+        ]
       }
     },
-    "required": []
+    "required": [
+      "TRAEFIK_VERSION",
+      "TRAEFIK_LETSENCRYPT_EMAIL",
+      "TRAEFIK_DASHBOARD_ENABLED",
+      "TRAEFIK_DASHBOARD_INSECURE",
+      "TRAEFIK_DASHBOARD_PORT",
+      "TRAEFIK_DASHBOARD_ADMIN_USER",
+      "TRAEFIK_DASHBOARD_ADMIN_PASSWORD",
+      "TRAEFIK_LOG_LEVEL"
+    ]
   }
 }
