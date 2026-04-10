@@ -1,5 +1,20 @@
 {
+  "id": "wordpress",
+  "type": "compose",
+  "title": "WordPress Template",
+  "description": "A template for a WordPress stack with a MySQL database.",
   "version": "1.0.0",
+  "note": "",
+  "categories": [
+    "Blogging",
+    "CMS"
+  ],
+  "platform": "linux",
+  "logo": "",
+  "repository": {
+    "url": "https://github.com/fm-labs/mc-launchpacks",
+    "stackfile": "stacks/wordpress/compose.yaml"
+  },
   "routing": [
     {
       "service": "wordpress",
@@ -8,72 +23,37 @@
     }
   ],
   "environment": {
-    "properties": {
       "WORDPRESS_DB_HOST": {
-        "type": "string",
         "title": "Database Host",
         "description": "Hostname or IP address of the database server.",
-        "default": "db",
-        "minLength": 1
+        "default": "db"
       },
       "WORDPRESS_DB_USER": {
-        "type": "string",
         "title": "Database User",
         "description": "Username for the WordPress database.",
-        "default": "wordpress",
-        "minLength": 1
+        "default": "wordpress"
       },
       "WORDPRESS_DB_PASSWORD": {
-        "type": "string",
         "title": "Database Password",
         "description": "Password for the WordPress database user.",
-        "default": "",
-        "minLength": 12,
-        "widget": "password",
         "$secret": true
       },
       "WORDPRESS_DB_NAME": {
-        "type": "string",
         "title": "Database Name",
         "description": "Name of the WordPress database.",
-        "default": "wordpress",
-        "minLength": 1
+        "default": "wordpress"
       },
       "WORDPRESS_TABLE_PREFIX": {
-        "type": "string",
         "title": "Table Prefix",
         "description": "Prefix for WordPress database tables.",
         "default": "wp_",
-        "minLength": 1,
         "pattern": "^\\w+$",
         "patternErrorMessage": "Table prefix can only contain letters, numbers, and underscores."
       },
-      "WORDPRESS_DEBUG": {
-        "type": "string",
-        "title": "Enable Debugging",
-        "description": "Enable or disable WordPress debugging mode.",
-        "default": "false",
-        "enum": [
-          "true",
-          "false"
-        ]
-      },
       "MYSQL_ROOT_PASSWORD": {
-        "type": "string",
         "title": "Mysql Root Password",
         "description": "Password for the Mysql root database user.",
-        "default": "",
-        "minLength": 12,
-        "widget": "password",
         "$secret": true
       }
-    },
-    "required": [
-      "WORDPRESS_DB_HOST",
-      "WORDPRESS_DB_USER",
-      "WORDPRESS_DB_PASSWORD",
-      "WORDPRESS_DB_NAME",
-      "MYSQL_ROOT_PASSWORD"
-    ]
-  }
+    }
 }

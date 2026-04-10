@@ -1,35 +1,6 @@
 
 services:
 
-#  db:
-#    image: mariadb:11
-#    restart: unless-stopped
-#    environment:
-#      MYSQL_DATABASE: wordpress
-#      MYSQL_USER: wordpress
-#      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:?VARIABLE-NOT-SET}
-#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?VARIABLE-NOT-SET}
-#    volumes:
-#      - db_data:/var/lib/mysql
-#    healthcheck:
-#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
-
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:?VARIABLE-NOT-SET}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?VARIABLE-NOT-SET}
-      #MYSQL_RANDOM_ROOT_PASSWORD: '1'
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - wordpress-net
 
   wordpress:
     image: wordpress:latest
@@ -53,6 +24,38 @@ services:
       #- ./dbcheck.php:/dbcheck.php:ro
     networks:
       - wordpress-net
+
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:?VARIABLE-NOT-SET}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?VARIABLE-NOT-SET}
+      #MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - wordpress-net
+
+
+#  db:
+#    image: mariadb:11
+#    restart: unless-stopped
+#    environment:
+#      MYSQL_DATABASE: wordpress
+#      MYSQL_USER: wordpress
+#      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:?VARIABLE-NOT-SET}
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?VARIABLE-NOT-SET}
+#    volumes:
+#      - db_data:/var/lib/mysql
+#    healthcheck:
+#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
 #  # Optional database GUI at http://localhost:8081
 #  phpmyadmin:
