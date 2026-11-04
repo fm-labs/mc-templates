@@ -17,11 +17,27 @@
   },
   "routing": [
     {
-      "service": "wordpress",
-      "containerPort": 80,
-      "accessPolicy": "public"
+      "service_name": "wordpress",
+      "container_port": 80,
+      "access_policy": "public"
     }
   ],
+  "volumes": {
+      "wordpress_data": {
+        "title": "WordPress Data",
+        "description": "Persistent storage for WordPress data."
+      },
+      "mysql_data": {
+        "title": "MySQL Data",
+        "description": "Persistent storage for MySQL data."
+      }
+  },
+  "networks": {
+      "wordpress_network": {
+        "title": "WordPress Network",
+        "description": "Network for WordPress and MySQL containers."
+      }
+  },
   "environment": {
       "WORDPRESS_DB_HOST": {
         "title": "Database Host",
@@ -36,7 +52,8 @@
       "WORDPRESS_DB_PASSWORD": {
         "title": "Database Password",
         "description": "Password for the WordPress database user.",
-        "$secret": true
+        "sensitive": true,
+        "default": "@random"
       },
       "WORDPRESS_DB_NAME": {
         "title": "Database Name",
@@ -53,7 +70,8 @@
       "MYSQL_ROOT_PASSWORD": {
         "title": "Mysql Root Password",
         "description": "Password for the Mysql root database user.",
-        "$secret": true
+        "sensitive": true,
+        "default": "@random"
       }
     }
 }
